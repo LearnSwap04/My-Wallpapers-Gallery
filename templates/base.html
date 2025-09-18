@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}My Wallpaper Gallery{% endblock %}</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <style>
+      body {
+        font-family: Gill Sans, Verdana;
+        margin: 0;
+        background-color: #f4f4f4;
+      }
+
+      /* Custom Navbar Styles (ZEDGE aesthetic) */
+      .custom-navbar {
+        background-color: #2b2b2b;
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .custom-navbar .navbar-brand {
+        color: #fff;
+        font-weight: bold;
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+      }
+
+      .custom-navbar .nav-link {
+        color: #fff;
+        font-weight: 500;
+        padding: 8px 15px;
+        border-radius: 5px;
+        transition: background-color 0.2s;
+        text-decoration: none;
+      }
+
+      .custom-navbar .nav-link:hover,
+      .custom-navbar .nav-link.active {
+        background-color: #444;
+        color: #fff;
+      }
+
+      .custom-navbar .dropdown-menu {
+        background-color: #2b2b2b;
+        border: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      .custom-navbar .dropdown-item {
+        color: #fff;
+        padding: 10px 20px;
+        transition: background-color 0.2s;
+      }
+
+      .custom-navbar .dropdown-item:hover {
+        background-color: #444;
+        color: #fff;
+      }
+
+      .custom-navbar .search-form {
+        margin-left: auto;
+        position: relative;
+        max-width: 400px;
+      }
+
+      .custom-navbar .search-input {
+        width: 100%;
+        padding: 10px 40px 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #444;
+        color: #fff;
+        font-size: 16px;
+      }
+
+      .custom-navbar .search-input::placeholder {
+        color: #bbb;
+      }
+
+      .custom-navbar .search-icon {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #bbb;
+        pointer-events: none;
+      }
+
+      /* General Styles */
+      h2 {
+        text-align: center;
+        margin-top: 2rem;
+      }
+
+      .wallpaper {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.3s;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .wallpaper:hover {
+        transform: scale(1.03);
+      }
+
+      .wallpaper-img-container {
+        flex: 1;
+        overflow: hidden;
+      }
+
+      .wallpaper img {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        object-position: center;
+        display: block;
+        opacity: 0;
+        transition: opacity 0.5s ease-in;
+      }
+
+      .wallpaper img[loading="lazy"] {
+        opacity: 1;
+      }
+
+      .download-btn {
+        display: block;
+        padding: 12px;
+        text-align: center;
+        background-color: #007BFF;
+        color: white;
+        font-weight: bold;
+        text-decoration: none;
+        border-top: 1px solid #ccc;
+        transition: background-color 0.3s;
+      }
+
+      .download-btn:hover {
+        background-color: #0056b3;
+      }
+
+      /* START: Masonry CSS */
+      .gallery-masonry {
+        display: block;
+        column-count: 3;
+        column-gap: 20px;
+        padding: 1.5rem;
+      }
+      .gallery-masonry .wallpaper {
+        width: 100%;
+        break-inside: avoid;
+        margin-bottom: 20px;
+      }
+      .gallery-masonry .wallpaper-img-container {
+        height: auto;
+      }
+      .gallery-masonry .wallpaper img {
+        height: auto;
+        object-fit: contain;
+      }
+
+      @media (max-width: 1200px) {
+        .gallery-masonry {
+          column-count: 2;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .gallery-masonry {
+          column-count: 1;
+        }
+        .custom-navbar {
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 10px;
+        }
+        .custom-navbar .navbar-brand {
+          width: 100%;
+          justify-content: center;
+          margin-bottom: 10px;
+        }
+        .custom-navbar .search-form {
+          order: 1;
+          width: 100%;
+          max-width: none;
+        }
+        .custom-navbar .nav-item.dropdown,
+        .custom-navbar .nav-item {
+          flex-grow: 1;
+          text-align: center;
+        }
+        .custom-navbar .nav-link {
+          width: 100%;
+          display: block;
+        }
+      }
+      /* END: Masonry CSS */
+
+      {% block extra_css %}{% endblock %}
+    </style>
+  </head>
+  <body>
+    <nav class="custom-navbar">
+      <a class="navbar-brand" href="/">My Gallery</a>
+
+      <a class="nav-link" href="/">Home</a>
+
+      <div class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle"
+          href="#"
+          id="categoriesDropdown"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Categories
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="categoriesDropdown">
+          <li>
+            <a
+              class="dropdown-item"
+              href="{{ url_for('show_all_wallpapers') }}"
+            >
+              All Wallpapers
+            </a>
+          </li>
+          {% for cat in [ "pc", "mobile", "anime", "cyberpunk", "linux", "misc",
+          "nature", "nord", "themes", "purple", "space", "windows" ] %}
+          <li>
+            <a
+              class="dropdown-item"
+              href="{{ url_for('show_wallpapers', category=cat) }}"
+            >
+              {{ cat|capitalize }}
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <form
+        class="search-form d-flex"
+        action="{{ url_for('search') }}"
+        method="get"
+      >
+        <input
+          class="search-input form-control me-2"
+          type="search"
+          name="query"
+          placeholder="Search Here"
+          aria-label="Search"
+        />
+        <i class="fas fa-search search-icon"></i>
+      </form>
+    </nav>
+
+    <main>{% block content %}{% endblock %}</main>
+
+    <footer>&copy; All rights reserved.</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

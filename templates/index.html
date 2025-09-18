@@ -1,0 +1,28 @@
+{% extends "base.html" %} {% block title %}Wallpaper App - Home{% endblock %} {%
+block content %}
+<div class="container mt-4">
+  <section class="random-showcase">
+    <b><h1>Featured Wallpapers</h1></b>
+    <hr />
+  </section>
+
+  <div class="gallery-masonry">
+    {% for device, wallpaper in random_wallpapers %}
+    <div class="wallpaper {{ device }}">
+      <div class="wallpaper-img-container">
+        <img
+          loading="lazy"
+          src="{{ url_for('static', filename='wallpapers/' ~ device ~ '/' ~ wallpaper) }}"
+          alt="{{ device }} Wallpaper"
+        />
+      </div>
+      <a
+        class="download-btn"
+        href="{{ url_for('download_local', device=device, filename=wallpaper) }}"
+        >Download</a
+      >
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
