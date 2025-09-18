@@ -8,7 +8,7 @@ from urllib.parse import urlparse
 
 app = Flask(__name__)
 
-UNSPLASH_ACCESS_KEY = "2VKRGt47R34jrj8OBe7iuOUdfFQeAXsD8G1nazxCoqg"
+UNSPLASH_ACCESS_KEY = os.environ.get("2VKRGt47R34jrj8OBe7iuOUdfFQeAXsD8G1nazxCoqg")
 
 # Define all wallpaper categories (you can add/remove easily here)
 CATEGORIES = [
@@ -143,4 +143,5 @@ def download_local(device, filename):
     return send_from_directory(wallpapers_dir, filename, as_attachment=True)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(debug=True, host='0.0.0.0', port=port)
