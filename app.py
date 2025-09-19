@@ -8,8 +8,8 @@ from urllib.parse import urlparse
 
 app = Flask(__name__)
 
-UNSPLASH_ACCESS_KEY = os.environ.get("2VKRGt47R34jrj8OBe7iuOUdfFQeAXsD8G1nazxCoqg")
-# UNSPLASH_ACCESS_KEY = "2VKRGt47R34jrj8OBe7iuOUdfFQeAXsD8G1nazxCoqg"
+# UNSPLASH_ACCESS_KEY = os.environ.get("2VKRGt47R34jrj8OBe7iuOUdfFQeAXsD8G1nazxCoqg")
+UNSPLASH_ACCESS_KEY = "2VKRGt47R34jrj8OBe7iuOUdfFQeAXsD8G1nazxCoqg"
 
 # Define all wallpaper categories (you can add/remove easily here)
 CATEGORIES = [
