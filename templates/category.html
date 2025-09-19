@@ -1,9 +1,8 @@
-{% extends "base.html" %} {% block title %} {{ category|capitalize }} Wallpapers
-- Wallpaper App {% endblock %} {% block content %}
+{% extends "base.html" %} {% block title %}{{ category|capitalize }} Wallpapers
+- Wallpaper App{% endblock %} {% block content %}
 <div class="container mt-4">
   <h1>{{ category|capitalize }} Wallpapers</h1>
   <hr />
-
   <div class="gallery-masonry">
     {% for wallpaper in wallpapers %}
     <div class="wallpaper {{ category }}">
@@ -17,9 +16,8 @@
       <a
         class="download-btn"
         href="{{ url_for('download_local', device=category, filename=wallpaper) }}"
+        >Download</a
       >
-        Download
-      </a>
     </div>
     {% endfor %}
   </div>

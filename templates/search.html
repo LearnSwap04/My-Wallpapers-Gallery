@@ -1,5 +1,5 @@
 {% extends "base.html" %} {% block title %}Search Results - Wallpaper App{%
-endblock %}{% block custom_header %} {% endblock %}{% block content %}
+endblock %} {% block content %}
 <div class="container mt-4">
   {% if query %}
   <h1>Search Results for "{{ query }}"</h1>
@@ -9,9 +9,7 @@ endblock %}{% block custom_header %} {% endblock %}{% block content %}
   <hr />
 
   {% if error %}
-  <div class="alert alert-danger" role="alert">
-    <strong>Error:</strong> {{ error }}
-  </div>
+  <div class="alert alert-danger"><strong>Error:</strong> {{ error }}</div>
   {% endif %} {% if images %}
   <div class="gallery-masonry">
     {% for image in images %}
@@ -44,7 +42,7 @@ endblock %}{% block custom_header %} {% endblock %}{% block content %}
     {% endif %}
   </div>
   {% elif query %}
-  <div class="alert alert-info text-center" role="alert">
+  <div class="alert alert-info text-center">
     <h4>No results found</h4>
     <p>No wallpapers found for "{{ query }}". Try a different search term.</p>
   </div>
