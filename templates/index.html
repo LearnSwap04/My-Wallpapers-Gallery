@@ -11,8 +11,7 @@ block content %}
       <div class="wallpaper-img-container">
         <img
           loading="lazy"
-          data-src="{{ url_for('static', filename='wallpapers/' ~ device ~ '/' ~ wallpaper) }}"
-          src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+          src="{{ url_for('static', filename='wallpapers/' ~ device ~ '/' ~ wallpaper) }}"
           alt="{{ device }} Wallpaper"
         />
       </div>

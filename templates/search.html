@@ -15,12 +15,7 @@ endblock %} {% block content %}
     {% for image in images %}
     <div class="wallpaper pc">
       <div class="wallpaper-img-container">
-        <img
-          loading="lazy"
-          data-src="{{ image.urls.regular }}"
-          src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-          alt="Wallpaper"
-        />
+        <img loading="lazy" src="{{ image.urls.regular }}" alt="Wallpaper" />
       </div>
       <a
         href="{{ url_for('download_unsplash', download_location=image.links.download_location, image_id=image.id) }}"
