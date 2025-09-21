@@ -9,7 +9,8 @@ endblock %} {% block content %}
       <div class="wallpaper-img-container">
         <img
           loading="lazy"
-          src="{{ url_for('static', filename='wallpapers/' ~ category ~ '/' ~ wallpaper) }}"
+          data-src="{{ url_for('static', filename='wallpapers/' ~ category ~ '/' ~ wallpaper) }}"
+          src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
           alt="{{ category }} Wallpaper"
         />
       </div>
