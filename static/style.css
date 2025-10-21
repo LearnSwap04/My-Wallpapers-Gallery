@@ -54,7 +54,6 @@ body {
     );
 }
 
-/* Navigation Improvements */
 .navbar {
   background: linear-gradient(
     135deg,
@@ -64,7 +63,7 @@ body {
   border-bottom: 1px solid var(--border-color);
   backdrop-filter: blur(10px);
   position: relative;
-  z-index: 1050; /* High z-index to ensure navbar stays on top */
+  z-index: 1050;
 }
 
 .navbar-brand {
@@ -103,7 +102,6 @@ body {
   border-radius: 1px;
 }
 
-/* Fixed dropdown menu z-index and styling */
 .dropdown {
   position: relative;
   z-index: 1060;
@@ -117,25 +115,24 @@ body {
   z-index: 1070;
   backdrop-filter: blur(15px);
   border-radius: 12px;
-  padding: 8px; /* Changed from padding: 8px 0; to 8px; */
+  padding: 8px;
   margin-top: 8px;
 }
 
 .dropdown-item {
   color: var(--text-secondary);
   transition: all 0.2s ease;
-  padding: 10px 12px; /* Adjusted padding to be symmetrical */
+  padding: 10px 12px;
   border-radius: 8px;
-  margin: 0; /* Changed from margin: 2px 8px; to 0; */
+  margin: 0;
 }
 
 .dropdown-item:hover {
   background-color: var(--bg-tertiary);
   color: var(--accent-color);
-  transform: none; /* Changed from transform: translateX(0) to none to be explicit */
+  transform: none;
 }
 
-/* Improved Search Form */
 .search-form {
   position: relative;
 }
@@ -191,7 +188,6 @@ body {
   box-shadow: 0 0 0 0.15rem rgba(0, 212, 255, 0.25);
 }
 
-/* Main Content */
 .container {
   position: relative;
   z-index: 1;
@@ -206,6 +202,7 @@ h1 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  left: 0;
 }
 
 hr {
@@ -214,11 +211,10 @@ hr {
   margin-bottom: 2rem;
 }
 
-/* Gallery Improvements */
 .gallery-masonry {
-  column-count: 5;
+  column-count: 3;
   column-gap: 20px;
-  padding: 20px;
+  padding: 10px;
   position: relative;
   z-index: 1;
 }
@@ -254,7 +250,7 @@ hr {
   transform: translateY(-8px) scale(1.02);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 212, 255, 0.3),
     0 0 40px var(--shadow-glow);
-  z-index: 10; /* Lower than dropdown but higher than other wallpapers */
+  z-index: 10;
 }
 
 .wallpaper:hover::before {
@@ -309,7 +305,6 @@ hr {
   box-shadow: 0 8px 25px var(--shadow-glow);
 }
 
-/* Alerts */
 .alert-danger {
   background-color: rgba(220, 53, 69, 0.1);
   border-color: rgba(220, 53, 69, 0.3);
@@ -322,7 +317,6 @@ hr {
   color: var(--accent-color);
 }
 
-/* Buttons */
 .btn-primary {
   background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
   border: none;
@@ -339,7 +333,6 @@ hr {
   background: linear-gradient(135deg, var(--accent-hover), #0099cc);
 }
 
-/* Pagination */
 .pagination-buttons {
   margin-top: 3rem;
 }
@@ -348,7 +341,6 @@ hr {
   margin: 0 10px;
 }
 
-/* Random Showcase */
 .random-showcase h1 {
   position: relative;
   display: inline-block;
@@ -365,7 +357,6 @@ hr {
   border-radius: 2px;
 }
 
-/* Loading States */
 img[loading="lazy"] {
   background: linear-gradient(45deg, var(--bg-secondary), var(--bg-tertiary));
   background-size: 400% 400%;
@@ -388,12 +379,14 @@ img[loading="lazy"] {
 @media (max-width: 1400px) {
   .gallery-masonry {
     column-count: 4;
+    padding: 10px;
   }
 }
 
 @media (max-width: 1200px) {
   .gallery-masonry {
     column-count: 3;
+    padding: 10px;
   }
 }
 
@@ -448,7 +441,6 @@ img[loading="lazy"] {
   }
 }
 
-/* Dark mode specific hover effects */
 .wallpaper:hover {
   animation: glow 2s ease-in-out infinite alternate;
 }

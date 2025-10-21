@@ -1,11 +1,11 @@
-{% extends "base.html" %} {% block title %}All Wallpapers - Wallpaper App{%
-endblock %} {% block content %}
+{% extends "base.html" %} {% block title %}All Wallpapers{% endblock %} {% block
+content %}
 <div class="container mt-4">
   <h1>All Wallpapers</h1>
   <hr />
   <div class="gallery-masonry">
     {% for category, wallpaper in wallpapers %}
-    <div class="wallpaper {{ category }}">
+    <div class="wallpaper">
       <div class="wallpaper-img-container">
         <img
           loading="lazy"

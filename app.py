@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 UNSPLASH_ACCESS_KEY = "2VKRGt47R34jrj8OBe7iuOUdfFQeAXsD8G1nazxCoqg"
 
-# Define all wallpaper categories (you can add/remove easily here)
+# Define all wallpaper categories
 CATEGORIES = [
     "pc", "mobile", "anime", "cyberpunk", "linux", "misc", "nature", "nord", "themes", "purple", "space", "windows"
 ]
@@ -28,30 +28,25 @@ get_all_wallpapers = lambda d: list(
     itertools.chain.from_iterable(
         [(cat, img) for img in imgs] for cat, imgs in d.items()
     )
-)
+)          
 
 @app.route('/')
 def index():
     all_wallpapers = get_all_wallpapers(wallpapers_dict)
-
-    # Show up to 100 random wallpapers on homepage
     num_random_wallpapers = min(100, len(all_wallpapers)) if all_wallpapers else 0
     random_wallpapers = (
         random.sample(all_wallpapers, num_random_wallpapers) if num_random_wallpapers > 0 else []
     )
-
     return render_template('index.html', random_wallpapers=random_wallpapers)
 
 # Dynamic route for each category
 @app.route('/<category>')
 def show_wallpapers(category):
-    if category not in wallpapers_dict:
-        return "Category not found", 404
     wallpapers = wallpapers_dict[category][:]
     random.shuffle(wallpapers)
     return render_template('category.html', category=category, wallpapers=wallpapers)
 
-# Special "all wallpapers" route
+
 @app.route('/all')
 def show_all_wallpapers():
     all_wallpapers = get_all_wallpapers(wallpapers_dict)
@@ -63,23 +58,19 @@ def search():
     query = request.args.get('query')
     page = request.args.get('page', 1, type=int)
 
-    if not query:
-        return render_template('search.html', query=None, images=None)
-
     url = "https://api.unsplash.com/search/photos"
     params = {
         'query': query,
         'per_page': 30,
         'page': page,
-        'client_id': UNSPLASH_ACCESS_KEY
+        'client_id': UNSPLASH_ACCESS_KEY,
+        # 'orientation': "squarish"
     }
 
     try:
         response = requests.get(url, params=params)
-        response.raise_for_status()
         data = response.json()
         images = data.get('results', [])
-
         total_results = data.get('total', 0)
         total_pages = (total_results + 29) // 30
 
@@ -104,14 +95,12 @@ def download_unsplash(image_id):
 
     try:
         response = requests.get(download_url, headers=headers)
-        response.raise_for_status()
         download_location = response.json().get('url')
 
         if not download_location:
             return "Error: Download location not found.", 500
 
-        image_response = requests.get(download_location, stream=True)
-        image_response.raise_for_status()
+        image_response = requests.get(download_location)
 
         parsed_url = urlparse(download_location)
         filename = os.path.basename(parsed_url.path) or f"wallpaper_{image_id}.jpg"
@@ -143,4 +132,4 @@ def download_local(device, filename):
     return send_from_directory(wallpapers_dir, filename, as_attachment=True)
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=False, host='0.0.0.0')
