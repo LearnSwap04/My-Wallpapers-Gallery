@@ -5,10 +5,13 @@ import requests
 import io
 import itertools
 from urllib.parse import urlparse
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 
-UNSPLASH_ACCESS_KEY = "2VKRGt47R34jrj8OBe7iuOUdfFQeAXsD8G1nazxCoqg"
+UNSPLASH_ACCESS_KEY = os.getenv("UNSPLASH_ACCESS_KEY")
 
 # Define all wallpaper categories
 CATEGORIES = [
@@ -30,6 +33,7 @@ get_all_wallpapers = lambda d: list(
     )
 )          
 
+
 @app.route('/')
 def index():
     all_wallpapers = get_all_wallpapers(wallpapers_dict)
@@ -39,7 +43,7 @@ def index():
     )
     return render_template('index.html', random_wallpapers=random_wallpapers)
 
-# Dynamic route for each category
+
 @app.route('/<category>')
 def show_wallpapers(category):
     wallpapers = wallpapers_dict[category][:]
@@ -131,5 +135,5 @@ def download_local(device, filename):
         return "Directory not found.", 404
     return send_from_directory(wallpapers_dir, filename, as_attachment=True)
 
-if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0')
+
+app.run(debug=False, host='0.0.0.0')
